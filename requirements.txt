@@ -1,0 +1,5 @@
+kivy==2.1.0
+kivy-garden==0.1.4
+plyer==2.0.0
+opencv-python==4.5.3.56
+numpy<2.0.0

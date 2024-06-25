@@ -1,0 +1,2 @@
+PRIMARY_COLOR = (0.1, 0.5, 0.7, 1)
+SECONDARY_COLOR = (0.8, 0.2, 0.2, 1)
