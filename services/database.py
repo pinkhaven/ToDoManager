@@ -2,6 +2,7 @@ import sqlite3
 from models import event
 from models import task
 
+
 class DatabaseService:
     @staticmethod
     def setup_database():
@@ -33,6 +34,25 @@ class DatabaseService:
         return tasks
 
     @staticmethod
+    def update_task(task):
+        conn = sqlite3.connect('todomanager.db')
+        c = conn.cursor()
+        c.execute('''UPDATE tasks 
+                           SET description=?, due_date=?, priority=?, is_done=? 
+                           WHERE title=?''',
+                  (task.description, task.due_date, task.priority, task.is_done, task.title))
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def delete_task(task_title):
+        conn = sqlite3.connect('todomanager.db')
+        c = conn.cursor()
+        c.execute("DELETE FROM tasks WHERE title=?", (task_title,))
+        conn.commit()
+        conn.close()
+
+    @staticmethod
     def add_event(event):
         conn = sqlite3.connect('todomanager.db')
         c = conn.cursor()
@@ -50,29 +70,22 @@ class DatabaseService:
         conn.close()
         return events
 
-    @staticmethod
-    def delete_task(task_title):
-        conn = sqlite3.connect('todomanager.db')
-        c = conn.cursor()
-        c.execute("DELETE FROM tasks WHERE title=?", (task_title,))
-        conn.commit()
-        conn.close()
-
-    @staticmethod
-    def update_task(task):
-        conn = sqlite3.connect('todomanager.db')
-        c = conn.cursor()
-        c.execute('''UPDATE tasks 
-                     SET description=?, due_date=?, priority=?, is_done=? 
-                     WHERE title=?''',
-                     (task.description, task.due_date, task.priority, task.is_done, task.title))
-        conn.commit()
-        conn.close()
 
     @staticmethod
     def delete_event(event_title):
         conn = sqlite3.connect('todomanager.db')
         c = conn.cursor()
         c.execute("DELETE FROM events WHERE title=?", (event_title,))
+        conn.commit()
+        conn.close()
+
+    @staticmethod
+    def update_event(event):
+        conn = sqlite3.connect('todomanager.db')
+        c = conn.cursor()
+        c.execute('''UPDATE events 
+                     SET description=?, event_date=? 
+                     WHERE title=?''',
+                  (event.description, event.event_date, event.title))
         conn.commit()
         conn.close()
